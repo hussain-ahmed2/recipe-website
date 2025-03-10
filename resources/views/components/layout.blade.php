@@ -12,11 +12,11 @@
 
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-sans">
 
     <x-header />
 
-    <main>
+    <main class="py-16 px-6">
         <h1>Recipes main content</h1>
     </main>
 
