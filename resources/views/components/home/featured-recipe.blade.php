@@ -26,7 +26,7 @@
 
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-4">
-                    <img class="h-12 w-12" src="{{ asset('storage/images/featured-recipe-author.png') }}"
+                    <img class="h-12 w-12" src="{{ Vite::asset('resources/images/featured-recipe-author.png') }}"
                         alt="author">
                     <div class="">
                         <h3 class="font-bold">John Smith</h3>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="relative h-[40rem]">
-            <img class="h-full w-full" src="{{ asset('storage/images/featured-recipe.png') }}" alt="featured-recipe">
+            <img class="h-full w-full" src="{{ Vite::asset('resources/images/featured-recipe.png') }}" alt="featured-recipe">
             <img class="absolute top-12 -left-12 h-36 w-36"
                 src="{{ Vite::asset('resources/logos/handpicked-recipes.png') }}" alt="handpicked-recipes">
         </div>
