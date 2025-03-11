@@ -17,10 +17,10 @@
 
 @layer base {
     .logo {
-        @apply font-lobster text-2xl;
+        @apply font-lobster text-2xl ms-5;
     }
 
     .navlink {
-        @apply hover:underline decoration-1 font-medium transition;
+        @apply hover:underline decoration-1 font-medium max-md:py-4 max-md:hover:bg-black/8 max-md:px-5 transition;
     }
 }
