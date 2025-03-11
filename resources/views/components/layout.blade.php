@@ -10,14 +10,16 @@
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <script defer src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="font-inter">
 
     <x-header />
 
-    <main class="py-16 px-6">
-        <h1>Recipes main content</h1>
+    <main class="">
+        {{ $slot }}
     </main>
 
     <x-footer />
