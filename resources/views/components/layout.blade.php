@@ -14,11 +14,11 @@
 
 </head>
 
-<body class="font-inter">
+<body class="font-inter overflow-x-hidden">
 
     <x-header />
 
-    <main class="">
+    <main class="pt-18 min-h-[calc(100vh-19rem)]">
         {{ $slot }}
     </main>
 

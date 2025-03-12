@@ -1,44 +1,20 @@
-@php
-    $categories = [
-        'Breakfast' => [
-            'title' => 'Breakfast',
-            'image' => '🍙',
-        ],
-        'Vegan' => [
-            'title' => 'Vegan',
-            'image' => '🥬',
-        ],
-        'Meat' => [
-            'title' => 'Meat',
-            'image' => '🥩',
-        ],
-        'Dessert' => [
-            'title' => 'Dessert',
-            'image' => '🍰',
-        ],
-        'Lunch' => [
-            'title' => 'Lunch',
-            'image' => '🥪',
-        ],
-        'Chocolate' => [
-            'title' => 'Chocolate',
-            'image' => '🍫',
-        ],
-    ];
-@endphp
+@props(['categories'])
 
-
-<div class="max-w-7xl mx-auto my-40">
+<div class="max-w-7xl mx-auto px-5">
     <div class="flex items-center justify-between mb-20">
-        <h2 class="text-5xl font-semibold">Categories</h2>
-        <button class="px-7 py-4 bg-cyan-100 rounded-2xl font-semibold">View All Categories</button>
+        <h2 class="h2">Categories</h2>
+        <a href="/categories" class="btn-light max-md:hidden">View All Categories</a>
     </div>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-center flex-wrap gap-5 md:gap-10">
         @foreach ($categories as $category)
-            <div class="flex flex-col items-center justify-between gap-10 p-6 bg-gradient-to-b from-white to-orange-50 rounded-4xl">
-                <div class="text-8xl drop-shadow-2xl">{{ $category['image'] }}</div>
-                <h4 class="font-semibold text-lg">{{ $category['title'] }}</h4>
+            <div
+                class="max-w-42 flex flex-col items-center justify-between gap-10 p-6 bg-gradient-to-b from-white to-orange-50 rounded-3xl md:rounded-4xl">
+                <div class="text-6xl md:text-8xl drop-shadow-2xl">{{ $category->icon }}</div>
+                <h4 class="font-semibold text-lg">{{ $category->name }}</h4>
             </div>
         @endforeach
+    </div>
+    <div class="w-full md:hidden mt-5 md:mt-10">
+        <button class="btn-light ">View All Categories</button>
     </div>
 </div>

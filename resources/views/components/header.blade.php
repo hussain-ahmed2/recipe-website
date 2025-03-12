@@ -1,22 +1,23 @@
-<header class="border-b border-black/10 z-100 sticky top-0 bg-white">
-    <nav class="min-h-18 md:min-h-28 flex items-center justify-between max-w-7xl mx-auto">
+<header class="border-b border-black/10 z-100 fixed top-0 bg-white w-full">
+    <nav class="min-h-18 flex items-center justify-between max-w-7xl mx-auto">
         <a href="/" class="logo">Foodiland<span class="text-orange-600">.</span></span></a>
 
         <div id="menu" class="flex md:gap-7 lg:gap-14 lg:w-2/3 md:justify-between md:me-5 max-md:absolute top-18 left-0 right-0 bg-white max-md:flex-col max-md:border-y border-black/10 transition ease-in-out duration-300 max-md:translate-x-full">
             <div class="flex md:items-center md:gap-7 lg:gap-14 max-md:flex-col">
-                <a href="/" class="navlink">Home</a>
-                <a href="/recipes" class="navlink">Recipes</a>
-                <a href="/blog" class="navlink">Blog</a>
-                <a href="/contact" class="navlink">Contact</a>
-                <a href="/about" class="navlink">About Us</a>
+                <a href="/" class="navlink {{ Request::is('/') ? "text-orange-600" : "" }}">Home</a>
+                <a href="/recipes" class="navlink {{ Request::is('recipes') ? "text-orange-600" : "" }}">Recipes</a>
+                <a href="/blog" class="navlink {{ Request::is('blog') ? "text-orange-600" : "" }}">Blog</a>
+                <a href="/contact" class="navlink {{ Request::is('contact') ? "text-orange-600" : "" }}">Contact</a>
+                <a href="/about" class="navlink {{ Request::is('about') ? "text-orange-600" : "" }}">About Us</a>
             </div>
 
             <div class="flex md:items-center md:gap-5 lg:gap-10 max-md:flex-col">
                 @auth
-                    <a href="/profile" class="navlink"></a>
+                    <a href="/profile" class="navlink {{ Request::is('profile') ? "text-orange-600" : "" }}">Profile</a>
+                    <x-forms.logout-form />
                 @else
-                    <a href="/login" class="navlink"> Login </a>
-                    <a href="/register" class="navlink"> Register </a>
+                    <a href="/login" class="navlink {{ Request::is('login') ? "text-orange-600" : "" }}"> Login </a>
+                    <a href="/register" class="navlink {{ Request::is('register') ? "text-orange-600" : "" }}"> Register </a>
                 @endauth
             </div>
         </div>
@@ -26,13 +27,3 @@
         </button>
     </nav>
 </header>
-
-
-<script>
-    const menu = document.getElementById('menu');
-    const menuButton = document.getElementById('menu-button');
-
-    menuButton.addEventListener('click', () => {
-        menu.classList.toggle('max-md:translate-x-full');
-    });
-</script>

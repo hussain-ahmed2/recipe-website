@@ -1,13 +1,15 @@
 <x-layout>
 
-    <x-home.featured-recipe />
+    <div class="flex flex-col gap-25 my-14">
+        <x-home.featured-recipe :recipe="$featuredRecipe" />
 
-    <x-home.featured-recipes />
+        <x-home.featured-recipes :$recipes />
 
-    <x-home.featured-categories />
+        <x-home.featured-categories :$categories />
 
-    <x-home.chef-blog />
+        <x-home.chef-blog />
 
-    <x-home.newslatter />
-    
+        <x-home.newsletter />
+    </div>
+
 </x-layout>
