@@ -1,0 +1,1 @@
+<button {{ $attributes(['type' => 'submit', 'class' => 'bg-black hover:bg-black/85 transition duration-300 rounded-lg px-9 py-4 flex items-center justify-center gap-3 text-white active:ring-4 ring-black/10']) }}> {{ $slot }} </button>
