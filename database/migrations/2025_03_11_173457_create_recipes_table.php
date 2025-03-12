@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +16,7 @@ return new class extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description');
             $table->json('ingredients'); // Store ingredients as JSON
             $table->json('instructions'); // Store instructions as JSON
             $table->integer('prepTimeMinutes');
@@ -25,8 +27,9 @@ return new class extends Migration
             $table->integer('caloriesPerServing');
             $table->string('image');
             $table->timestamps();
-
+            
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
         });
     }
 
