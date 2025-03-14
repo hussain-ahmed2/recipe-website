@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Models\Recipe;
 use App\Models\User;
 use App\Models\Category;
