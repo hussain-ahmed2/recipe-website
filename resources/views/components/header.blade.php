@@ -1,6 +1,6 @@
 <header class="border-b border-black/10 z-100 fixed top-0 bg-white w-full">
     <nav class="min-h-18 flex items-center justify-between max-w-7xl mx-auto">
-        <a href="/" class="logo">Foodiland<span class="text-orange-600">.</span></span></a>
+        <a href="/" class="logo">RecipeRally<span class="text-orange-600">.</span></span></a>
 
         <div id="menu" class="flex md:gap-7 lg:gap-14 lg:w-2/3 md:justify-between md:me-5 max-md:absolute top-18 left-0 right-0 bg-white max-md:flex-col max-md:border-y border-black/10 transition ease-in-out duration-300 max-md:translate-x-full">
             <div class="flex md:items-center md:gap-7 lg:gap-14 max-md:flex-col">
