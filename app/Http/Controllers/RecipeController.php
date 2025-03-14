@@ -5,14 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class RecipeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $recipes = Recipe::latest()->paginate(12);
+        $query = Recipe::query();
+
+        if ($request->has('search') && isEmpty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        $recipes = $query->paginate(12)->appends(['search' => $request->search]);
+
         return view('recipes.index', compact('recipes'));
     }
 
