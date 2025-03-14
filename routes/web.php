@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
@@ -14,18 +17,28 @@ Route::get('/', function () {
     $categories = Category::inRandomOrder()->take(6)->get();
 
     return view('index', compact('featuredRecipe', 'recipes', 'categories'));
-}); // Home page
+})->name('home'); // Home page
 
-Route::resource('recipes', RecipeController::class); // Recipes page
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index'); // show recipes page
+Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show'); // show recipe page
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index'); // show categories page
 
 Route::middleware('guest')->group(function () {
-    Route::get('/register', [RegisteredUserController::class, 'create']); // show register form page
+    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register'); // show register form page
     Route::post('/register', [RegisteredUserController::class, 'store']); // store the new user
 
-    Route::get('/login', [SessionController::class, 'create']); // show login form page
+    Route::get('/login', [SessionController::class, 'create'])->name('login'); // show login form page
     Route::post('/login', [SessionController::class, 'store']); // authenticate the new user login attempt
 });
 
 Route::middleware('auth')->group(function () {
-    Route::delete('/logout', [SessionController::class, 'destroy']); // logout the user
+    Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout'); // logout the user
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile'); // show user profile page
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit'); // show edit user profile page
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update'); // update user profile
+    
+    Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites.index'); // show favourites page
+    Route::post('/favourites/{recipe}', [FavouriteController::class, 'toggle'])->name('favourites.toggle'); // toggle favourite
 });
