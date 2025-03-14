@@ -1,4 +1,4 @@
-@props(['name', 'label', 'type' => 'text', 'placeholder' => '', 'value' => '', 'required' => true])
+@props(['name', 'label', 'type' => 'text', 'placeholder' => '', 'value' => '', 'required' => true, 'class' => ''])
 
 @php
     $defaults = [
@@ -7,7 +7,7 @@
         'type' => $type,
         'placeholder' => $placeholder,
         'value' => $value ? $value : old($name),
-        'class' => 'border border-black/10 outline-none py-3 px-4 rounded-lg w-full focus:ring-4 ring-black/10 transition duration-300',
+        'class' => 'border border-black/10 outline-none py-3 px-4 rounded-lg w-full focus:ring-4 ring-black/10 transition duration-300 ' . $class,
         'required' => $required
     ]
 @endphp

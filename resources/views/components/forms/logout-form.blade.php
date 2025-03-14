@@ -2,5 +2,5 @@
     @csrf
     @method('DELETE')
     
-    <button type="submit" class="px-6 py-2 rounded-md bg-rose-400 hover:bg-rose-500 text-white transition duration-300">Logout</button>
+    <button type="submit" class="navlink cursor-pointer text-rose-500 hover:text-rose-600 w-full max-md:hover:bg-rose-100">Logout</button>
 </form>

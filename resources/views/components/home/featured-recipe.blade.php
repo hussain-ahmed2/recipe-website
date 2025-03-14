@@ -17,7 +17,7 @@
                 <div class="flex gap-5 flex-wrap">
                     <div class="tag">
                         <box-icon type='solid' name='time'></box-icon>
-                        <p class="font-medium text-sm text-black/60"> {{ $recipe->cookTimeMinutes ?? 30 }} Minutes</p>
+                        <p class="font-medium text-sm text-black/60"> {{ $recipe->cookTimeMinutes ? $recipe->cookTimeMinutes : $recipe->prepTimeMinutes }} Minutes</p>
                     </div>
                     <div class="tag">
                         <box-icon type='solid' name='dish'></box-icon>
