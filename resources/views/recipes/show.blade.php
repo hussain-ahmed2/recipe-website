@@ -69,9 +69,12 @@
         </p>
 
         <div>
-            <h3 class="font-semibold text-3xl md:text-4xl">Ingredients</h3>
-            
-            <ul class="my-8 list-disc list-inside space-y-4">
+            <h3 class="font-semibold text-3xl md:text-4xl flex items-center gap-2">
+                <box-icon name='list-ul' size="md"></box-icon>
+                Ingredients
+            </h3>
+
+            <ul class="my-8 ms-8 list-disc list-inside space-y-4">
                 @foreach (json_decode($recipe->ingredients) as $ingredient)
                     <li class="text-lg font-medium text-black/90">
                         {{ $ingredient }}
@@ -81,9 +84,11 @@
         </div>
 
         <div>
-            <h3 class="font-semibold text-3xl md:text-4xl">Instructions</h3>
+            <h3 class="font-semibold text-3xl md:text-4xl flex items-center gap-2">
+                <box-icon name='list-ol' size="md"></box-icon>
+                Instructions</h3>
 
-            <ol class="my-8 list-decimal list-inside space-y-4">
+            <ol class="my-8 ms-8 list-decimal list-inside space-y-4">
                 @foreach (json_decode($recipe->instructions) as $instruction)
                     <li class="text-lg font-medium text-black/90">
                         {{ $instruction }}
