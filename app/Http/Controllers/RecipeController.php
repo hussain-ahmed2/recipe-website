@@ -18,15 +18,17 @@ class RecipeController extends Controller
         $query = Recipe::query();
         $categories = Category::all();
 
-        if ($request->has('search') && !empty($request->search)) {
+        if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        if ($request->has('category') && !empty($request->category)) {
-            $query->where('category_id', $request->category);
+        if ($request->filled('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
         }
 
-        if ($request->has('sort') && !empty($request->sort)) {
+        if ($request->filled('sort')) {
             $sort = [
                 'name_asc' => ['name', 'asc'],
                 'name_desc' => ['name', 'desc'],

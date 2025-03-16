@@ -12,8 +12,10 @@
                 </div>
 
                 <div class="flex mb-5 justify-end gap-5 flex-wrap">
-                    <div class="flex justify-center gap-1">
+                    <div class="flex justify-center gap-1 items-center">
+                        <label class="text-nowrap me-1" for="sort">Sort By</label>
                         <select
+                            id="sort"
                             class="border border-black/10 outline-none py-3 px-4 rounded-lg w-full focus:ring-4 ring-black/10 transition duration-300"
                             name="sort">
                             <option value="latest" {{ request()->sort == 'latest' ? 'selected' : '' }}>Latest</option>
@@ -23,14 +25,16 @@
                         </select>
                         <button class="px-7 py-3 bg-black rounded-lg text-white hover:bg-black/80">Sort</button>
                     </div>
-                    <div class="flex justify-center gap-1">
+                    <div class="flex justify-center gap-1 items-center">
+                        <label class="me-1" for="category">Category</label>
                         <select
+                            id="category"
                             class="border border-black/10 outline-none py-3 px-4 rounded-lg w-full focus:ring-4 ring-black/10 transition duration-300"
                             name="category" id="category">
                             <option value="">All Categories</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}"
-                                    {{ request()->category == $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                <option value="{{ $category->slug }}"
+                                    {{ request()->category == $category->slug ? 'selected' : '' }}>{{ $category->name }}
                                 </option>
                             @endforeach
                         </select>

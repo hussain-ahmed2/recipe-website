@@ -39,6 +39,7 @@ class CategorySeeder extends Seeder
         foreach ($mealTypes as $mealType) {
             Category::create([
                 'name' => $mealType,
+                'slug' => strtolower($mealType),
                 'icon' => $mealTypeEmojis[$mealType] ?? '🍴', // Default emoji if not found
             ]);
         }
