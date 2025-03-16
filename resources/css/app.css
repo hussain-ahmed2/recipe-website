@@ -75,4 +75,12 @@
     .tc {
         @apply transition duration-300;
     }
+
+    .sidebar-link {
+        @apply hover:bg-black/8 transition duration-300 px-10 py-3;
+    }
+
+    .input {
+        @apply border border-black/10 outline-none py-3 px-4 rounded-lg w-full focus: ring-4 ring-black/10 transition duration-300;
+    }
 }
