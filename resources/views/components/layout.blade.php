@@ -18,7 +18,7 @@
 
     <x-header />
 
-    <main class="pt-18 min-h-[calc(100vh-19rem)]">
+    <main class="pt-18 min-h-[calc(100vh-17rem)]">
         {{ $slot }}
     </main>
 
