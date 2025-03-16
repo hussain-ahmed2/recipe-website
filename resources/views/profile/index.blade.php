@@ -8,6 +8,7 @@
             <div>
                 <h2 class="text-2xl font-bold text-gray-800">{{ Auth::user()->name }}</h2>
                 <p class="text-gray-500">{{ Auth::user()->email }}</p>
+                <a href="/profile/edit" class="">Edit Profile</a> 
             </div>
         </div>
 
