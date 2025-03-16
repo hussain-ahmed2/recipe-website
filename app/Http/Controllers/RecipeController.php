@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
@@ -13,17 +14,33 @@ class RecipeController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
+    {        
         $query = Recipe::query();
+        $categories = Category::all();
 
-        if ($request->has('search') && isEmpty($request->search)) {
-            $search = $request->search;
-            $query->where('name', 'like', "%{$search}%");
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $recipes = $query->paginate(12)->appends(['search' => $request->search]);
+        if ($request->has('category') && !empty($request->category)) {
+            $query->where('category_id', $request->category);
+        }
 
-        return view('recipes.index', compact('recipes'));
+        if ($request->has('sort') && !empty($request->sort)) {
+            $sort = [
+                'name_asc' => ['name', 'asc'],
+                'name_desc' => ['name', 'desc'],
+                'latest' => ['created_at', 'desc'],
+                'oldest' => ['created_at', 'asc'],
+            ];
+
+            [$sortBy, $order] = $sort[$request->sort];
+            $query->orderBy($sortBy, $order);
+        }
+
+        $recipes = $query->paginate(12)->withQueryString();
+
+        return view('recipes.index', compact('recipes', 'categories'));
     }
 
     /**
