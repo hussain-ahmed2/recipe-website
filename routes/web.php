@@ -56,4 +56,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/recipes/{recipe}', [AdminController::class, 'update'])->name('admin.recipes.update');
     Route::delete('/admin/recipes/{recipe}', [AdminController::class, 'destroy'])->name('admin.recipes.destroy');
     
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users.index');
 });
