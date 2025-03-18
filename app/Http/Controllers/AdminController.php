@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Recipe;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -136,5 +137,19 @@ class AdminController extends Controller
         $recipe->delete();
 
         return redirect('/admin/recipes');
+    }
+
+    public function users(Request $request)
+    {
+        $query = User::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereLike('name', "%$search%", false)->orWhereLike('email', "%$search%", false);
+        }
+
+        $users = $query->paginate(12);
+
+        return view('admin.users', compact('users'));
     }
 }
