@@ -23,6 +23,10 @@ Route::get('/', function () {
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index'); // show recipes page
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show'); // show recipe page
 
+Route::view('/contact', 'contact')->name('contact'); // Contact page
+Route::view('/about', 'about-us')->name('about-us'); // About page
+Route::view('/blog', 'blog')->name('blog'); // Blog page
+
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index'); // show categories page
 
 Route::middleware('guest')->group(function () {
@@ -38,7 +42,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile'); // show user profile page
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit'); // show edit user profile page
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update'); // update user profile
+    Route::put('/profile/edit', [ProfileController::class, 'update'])->name('profile.update'); // update user profile
 
     Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites.index'); // show favourites page
     Route::post('/favourites/{recipe}', [FavouriteController::class, 'toggle'])->name('favourites.toggle'); // toggle favourite
@@ -47,14 +51,19 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::redirect('/admin', '/admin/dashboard');
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index'); // admin dashboard
     
-    Route::get('/admin/recipes', [AdminController::class, 'recipes'])->name('admin.recipes');
-    Route::get('/admin/recipes/create', [AdminController::class, 'create'])->name('admin.recipes.create');
-    Route::post('/admin/recipes', [AdminController::class, 'store'])->name('admin.recipes.store');
-    Route::get('/admin/recipes/{recipe}/edit', [AdminController::class, 'edit'])->name('admin.recipes.edit');
-    Route::put('/admin/recipes/{recipe}', [AdminController::class, 'update'])->name('admin.recipes.update');
-    Route::delete('/admin/recipes/{recipe}', [AdminController::class, 'destroy'])->name('admin.recipes.destroy');
+    Route::get('/admin/recipes', [AdminController::class, 'recipes'])->name('admin.recipes'); // admin show all recipes
+    Route::get('/admin/recipes/create', [AdminController::class, 'create'])->name('admin.recipes.create'); //  admin create recipe
+    Route::post('/admin/recipes', [AdminController::class, 'store'])->name('admin.recipes.store'); // admin store new recipe
+    Route::get('/admin/recipes/{recipe}/edit', [AdminController::class, 'edit'])->name('admin.recipes.edit'); // admin edit recipe
+    Route::put('/admin/recipes/{recipe}', [AdminController::class, 'update'])->name('admin.recipes.update'); // admin update recipe
+    Route::delete('/admin/recipes/{recipe}', [AdminController::class, 'destroy'])->name('admin.recipes.destroy'); // admin delete recipe
     
-    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users.index');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users.index'); // admin show all users
+    Route::get('/admin/users/{user}/edit', [AdminController::class, 'edit_user'])->name('admin.user.edit'); // admin users edit credentials
+    Route::put('/admin/users/{user}', [AdminController::class, 'update_user']); // admin update user credentials
+    Route::delete('/admin/users/{user}', [AdminController::class, 'delete_user']); // admin delete user
+
+    Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories.index'); // admin show all categories
 });
