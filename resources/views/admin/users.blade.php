@@ -1,6 +1,6 @@
 <x-layout>
 
-    <x-admin-layout title="Recipes">
+    <x-admin-layout title="Users">
 
         <div class="mb-8">
             <a href="/admin/users/create"
