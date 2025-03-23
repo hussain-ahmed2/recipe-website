@@ -5,9 +5,9 @@
         <p class="text-black/60">Lorem ipsum dolor sit amet, consectetuipisicing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqut enim ad minim </p>
 
-        <button class="btn w-fit mt-10">
+        <a href="/blog" class="btn w-fit mt-10">
             Learn More
-        </button>
+        </a>
     </div>
     <div class="h-[37.5rem] w-full">
         <img class="w-full h-full rounded-3xl" src="{{ Vite::asset('resources/images/chef.png') }}" alt="chef image">
