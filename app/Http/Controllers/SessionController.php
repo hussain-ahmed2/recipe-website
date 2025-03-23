@@ -26,13 +26,13 @@ class SessionController extends Controller
             ]);
         }
 
-        return redirect('/profile');
+        return redirect('/profile')->with('success', 'You have successfully logged in.');
     }
 
     public function destroy() 
     {
         Auth::logout();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'You have successfully logged out.');
     }
 }
