@@ -26,6 +26,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user); // login in the user
 
-        return redirect('/profile'); // redirect to user profile page
+        return redirect('/profile')->with('success', 'Account created successfully.'); // redirect to user profile page
     }
 }
