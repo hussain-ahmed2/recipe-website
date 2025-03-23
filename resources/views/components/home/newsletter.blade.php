@@ -9,7 +9,7 @@
             ut labore et dolore magna aliqut enim ad minim </p>
 
     </div>
-    <div class="flex w-full p-2.5 rounded-3xl bg-white z-10 max-w-lg border border-black/8">
+    <div class="flex w-full p-2.5 rounded-3xl bg-white z-10 max-w-lg border border-black/8 focus-within:ring-4 ring-black/10">
         <input class="outline-none py-3 px-5 w-full" type="text" placeholder="Your email address...">
         <button class="btn">
             subscribe
