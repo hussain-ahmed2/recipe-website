@@ -17,8 +17,9 @@ class FavouriteController extends Controller
 
     public function toggle(Request $request)
     {
-        Auth::user()->favourites()->toggle($request->recipe);
-
-        return back();
+        $status = Auth::user()->favourites()->toggle($request->recipe);
+        $isLiked = count($status['attached']);
+        
+        return back()->with('success', $isLiked ? "Recipe was added to the fevourite" : "Recipe was remove from the fevourite");
     }
 }
