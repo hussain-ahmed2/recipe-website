@@ -19,6 +19,7 @@
     <x-header />
 
     <main class="pt-18 min-h-[calc(100vh-17rem)]">
+        <x-message />
         {{ $slot }}
     </main>
 
