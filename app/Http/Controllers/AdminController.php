@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Recipe;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -136,7 +137,7 @@ class AdminController extends Controller
     {
         $recipe->delete();
 
-        return redirect('/admin/recipes');
+        return redirect('/admin/recipes')->with('success', 'Recipe deleted successfully.');
     }
 
     public function users(Request $request)
@@ -144,12 +145,58 @@ class AdminController extends Controller
         $query = User::query();
 
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->whereLike('name', "%$search%", false)->orWhereLike('email', "%$search%", false);
+            $query->whereLike('name', "%$request->search%", false)->orWhereLike('email', "%$request->search%", false);
         }
 
         $users = $query->paginate(12);
 
         return view('admin.users', compact('users'));
+    }
+
+    public function edit_user(User $user) 
+    {
+        return view('admin.edit-user', compact('user'));
+    }
+
+    public function update_user(Request $request, User $user) 
+    {
+        $request->validate([
+            'name' => ['required', 'min:2'],
+            'email' => ['required', 'email', 'max:254']
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => ['required', 'min:6', 'confirmed']
+            ]);
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'User updated successfully.');
+    }
+
+    public function delete_user(User $user) 
+    {
+        $user->delete();
+
+        return redirect('/admin/users')->with('success', 'User deleted successfully.');
+    }
+
+    public function categories(Request $request) 
+    {
+        $query = Category::query();
+
+        if ($request->filled('search')) {
+            $query->whereLike('name', "%$request->search%", false);
+        }
+
+        $categories = $query->paginate(12);
+
+        return view('admin.categories', compact('categories'));
     }
 }
