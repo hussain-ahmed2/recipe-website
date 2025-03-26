@@ -10,9 +10,11 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $favourites = Auth::user()->favourites()->orderByDesc('favourites.created_at')->with('favouritedBy')->paginate(6);
+        $favourites = Auth::user()->favourites()->orderByDesc('favourites.created_at')->with('favouritedBy')->paginate(3);
 
-        return view('profile.index', compact('favourites'));
+        $recipes = Auth::user()->recipes()->orderByDesc('recipes.created_at')->with('user')->paginate(3);
+
+        return view('profile.index', compact('favourites', 'recipes'));
     }
 
     public function edit()
