@@ -1,6 +1,13 @@
 <x-layout>
 
     <div class="max-w-7xl mx-auto px-5 my-14">
+
+        @if (Auth::user()->id === $recipe->user_id)
+            <div class="">
+                <a href="/recipes/{{ $recipe->id }}/edit" class="btn w-fit ml-auto">Edit</a>
+            </div>
+        @endif
+
         <div class="flex flex-col gap-12">
             <h1 class="h1">{{ $recipe->name }}</h1>
             <div class="flex items-center flex-wrap gap-16">
@@ -86,7 +93,8 @@
         <div>
             <h3 class="font-semibold text-3xl md:text-4xl flex items-center gap-2">
                 <box-icon name='list-ol' size="md"></box-icon>
-                Instructions</h3>
+                Instructions
+            </h3>
 
             <ol class="my-8 ms-8 list-decimal list-inside space-y-4">
                 @foreach (json_decode($recipe->instructions) as $instruction)
