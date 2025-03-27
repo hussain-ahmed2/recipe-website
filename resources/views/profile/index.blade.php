@@ -30,5 +30,21 @@
             </div>
         @endif
 
+        <!-- User's Recipes Section -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-10">👨‍🍳 My Recipes</h3>
+
+        @if ($recipes->isEmpty())
+            <p class="text-gray-500">You haven't added any recipes yet.</p>
+        @else
+            <div class="my-8">
+                <x-recipe.recipe-grid :$recipes />
+            </div>
+            <div>
+                @if ($recipes->lastPage() > 1)
+                    <a class="btn-light block mx-auto w-fit" href="/profile/recipes">View All</a>
+                @endif
+            </div>
+        @endif
+
     </div>
 </x-layout>
