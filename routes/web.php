@@ -20,9 +20,6 @@ Route::get('/', function () {
     return view('index', compact('featuredRecipe', 'recipes', 'categories'));
 })->name('home'); // Home page
 
-Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index'); // show recipes page
-Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show'); // show recipe page
-
 Route::view('/contact', 'contact')->name('contact'); // Contact page
 Route::view('/about', 'about-us')->name('about-us'); // About page
 Route::view('/blog', 'blog')->name('blog'); // Blog page
@@ -46,8 +43,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/favourites', [FavouriteController::class, 'index'])->name('favourites.index'); // show favourites page
     Route::post('/favourites/{recipe}', [FavouriteController::class, 'toggle'])->name('favourites.toggle'); // toggle favourite
+
+    Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create'); // show create recipe page
+    Route::post('/recipes', [RecipeController::class, 'store'])->name('recipes.store'); // store new recipe
+    Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit'])->name('recipes.edit'); // show edit recipe page
+    Route::put('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update'); // update recipe
 });
 
+Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index'); // show recipes page
+Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show'); // show recipe page
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::redirect('/admin', '/admin/dashboard');
