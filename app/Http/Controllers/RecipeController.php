@@ -171,6 +171,10 @@ class RecipeController extends Controller
 
     public function destroy(Recipe $recipe)
     {
+        if ($recipe->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+        
         $recipe->delete();
 
         return redirect('/profile')->with('success', 'Recipe deleted successfully.');
