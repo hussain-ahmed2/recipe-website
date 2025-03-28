@@ -3,7 +3,7 @@
         <a href="/" class="logo">RecipeRally<span class="text-orange-600">.</span></span></a>
 
         <div id="menu"
-            class="flex md:gap-7 lg:gap-14 lg:w-2/3 md:justify-between md:me-5 max-md:absolute top-18 left-0 right-0 bg-white max-md:flex-col max-md:border-y border-black/10 transition ease-in-out duration-300 max-md:translate-x-full">
+            class="flex md:gap-7 lg:gap-14 md:justify-between md:me-5 max-md:absolute top-18 left-0 right-0 bg-white max-md:flex-col max-md:border-y border-black/10 transition ease-in-out duration-300 max-md:translate-x-full">
             <div class="flex md:items-center md:gap-7 lg:gap-14 max-md:flex-col">
                 <a href="/" class="navlink {{ Request::is('/') ? 'text-orange-600' : '' }}">Home</a>
                 <a href="/recipes" class="navlink {{ Request::is('recipes') ? 'text-orange-600' : '' }}">Recipes</a>
@@ -12,12 +12,13 @@
                 <a href="/about" class="navlink {{ Request::is('about') ? 'text-orange-600' : '' }}">About Us</a>
             </div>
 
-            <div class="flex md:items-center md:gap-5 lg:gap-10 max-md:flex-col">
+            <div class="flex md:items-center md:gap-5 lg:gap-10 max-md:flex-col md:ms-6">
                 @auth
                     @if (Auth::user()->is_admin)
                         <a href="/admin/dashboard"
                             class="navlink {{ Request::is('admin/*') ? 'text-orange-600' : '' }}">Dashboard</a>
                     @else
+                        <a href="/recipes/create" class="navlink {{ Request::is('recipes/create') ? 'text-orange-600' : '' }}">Create Recipe</a>
                         <a href="/profile" class="navlink {{ Request::is('profile') ? 'text-orange-600' : '' }}">Profile</a>
                     @endif
                     <x-forms.logout-form />
