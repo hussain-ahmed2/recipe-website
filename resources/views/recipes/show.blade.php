@@ -12,7 +12,7 @@
             <h1 class="h1">{{ $recipe->name }}</h1>
             <div class="flex items-center flex-wrap gap-16">
                 <div class="flex items-center gap-4">
-                    <img class="h-12 w-12" src="{{ Vite::asset('resources/images/featured-recipe-author.png') }}"
+                    <img class="h-12 w-12 rounded-full" src="{{ $recipe->user->avatar ? $recipe->user->avatar : 'https://ui-avatars.com/api/?name=' .urlencode($recipe->user->name) . '&background=random&color=fff&size=128' }}"
                         alt="author">
                     <div class="space-y-1">
                         <h3 class="font-bold text-base">{{ $recipe->user->name ?? 'John Smith' }}</h3>
