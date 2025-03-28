@@ -31,7 +31,12 @@
         @endif
 
         <!-- User's Recipes Section -->
-        <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-10">👨‍🍳 My Recipes</h3>
+        <div class="flex flex-warp items-center justify-between gap-5">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-10">👨‍🍳 My Recipes</h3>
+            <div>
+                <a href="/recipes/create" class="btn">Create</a>
+            </div>
+        </div>
 
         @if ($recipes->isEmpty())
             <p class="text-gray-500">You haven't added any recipes yet.</p>
