@@ -2,17 +2,20 @@
 
     <div class="max-w-7xl mx-auto px-5 my-14">
 
-        @if (Auth::user()->id === $recipe->user_id)
-            <div class="">
-                <a href="/recipes/{{ $recipe->id }}/edit" class="btn w-fit ml-auto">Edit</a>
-            </div>
-        @endif
+        @auth
+            @if (Auth::user()->id === $recipe->user_id)
+                <div class="">
+                    <a href="/recipes/{{ $recipe->id }}/edit" class="btn w-fit ml-auto">Edit</a>
+                </div>
+            @endif
+        @endauth
 
         <div class="flex flex-col gap-12">
             <h1 class="h1">{{ $recipe->name }}</h1>
             <div class="flex items-center flex-wrap gap-16">
                 <div class="flex items-center gap-4">
-                    <img class="h-12 w-12 rounded-full" src="{{ $recipe->user->avatar ? $recipe->user->avatar : 'https://ui-avatars.com/api/?name=' .urlencode($recipe->user->name) . '&background=random&color=fff&size=128' }}"
+                    <img class="h-12 w-12 rounded-full"
+                        src="{{ $recipe->user->avatar ? $recipe->user->avatar : 'https://ui-avatars.com/api/?name=' . urlencode($recipe->user->name) . '&background=random&color=fff&size=128' }}"
                         alt="author">
                     <div class="space-y-1">
                         <h3 class="font-bold text-base">{{ $recipe->user->name ?? 'John Smith' }}</h3>
@@ -37,7 +40,17 @@
                     </div>
                     <div class="flex items-center gap-4">
                         <box-icon type='solid' name='dish'></box-icon>
-                        <p class="font-medium text-black/60">{{ $recipe->category->name ?? 'Chicken' }}</p>
+                        <div class="space-y-2">
+                            <h4 class="font-medium uppercase text-xs">Category</h4>
+                            <p class="font-medium text-black/60">{{ $recipe->category->name ?? 'Chicken' }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <box-icon name='star' type='solid'></box-icon>
+                        <div class="space-y-2">
+                            <h4 class="font-medium uppercase text-xs">Rating</h4>
+                            <p class="font-medium text-black/60">{{ round($recipe->averageRating(), 1) ?? 'N/A' }} / 5</p>
+                        </div>
                     </div>
                 </div>
             </div>
