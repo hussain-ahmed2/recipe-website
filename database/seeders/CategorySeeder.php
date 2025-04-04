@@ -26,13 +26,13 @@ class CategorySeeder extends Seeder
         $mealTypeEmojis = [
             'Dinner' => '🍽️',
             'Lunch' => '🥪',
-            'Snack' => '🍿',
+            'Snacks' => '🍿',
             'Dessert' => '🍰',
             'Breakfast' => '🥞',
             'Beverage' => '🥤',
             'Appetizer' => '🍤',
             'Side Dish' => '🥗',
-            'Snacks' => '🍟',
+            'Snack' => '🍪',
         ];
 
         // Insert meal types as categories with emojis
