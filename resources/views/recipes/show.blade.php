@@ -49,7 +49,8 @@
                         <box-icon name='star' type='solid'></box-icon>
                         <div class="space-y-2">
                             <h4 class="font-medium uppercase text-xs">Rating</h4>
-                            <p class="font-medium text-black/60">{{ round($recipe->averageRating(), 1) ?? 'N/A' }} / 5</p>
+                            <p class="font-medium text-black/60">{{ round($recipe->averageRating(), 1) ?? 'N/A' }} / 5
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -118,9 +119,84 @@
             </ol>
         </div>
 
+        <div class="my-14">
+            <h3 class="font-semibold text-3xl md:text-4xl flex items-center gap-2">
+                <box-icon name='star' size="md"></box-icon>
+                Reviews and Ratings
+            </h3>
+
+            <div class="my-8">
+                <ul class="my-8 mx-8 list-inside space-y-4">
+                    @foreach ($recipe->reviews as $review)
+                        @php
+                            if ($review->user_id === Auth::user()->id) {
+                                $alreadyReviewed = true;
+                            }
+                        @endphp
+                        <li class="p-6 rounded-2xl {{ $review->user_id === Auth::user()->id ? "bg-green-100" : "bg-gray-50" }} space-y-5">
+                            <div class="flex justify-between flex-wrap">
+                                <div class="flex items-center gap-4">
+                                    <img class="h-12 w-12 rounded-full"
+                                        src="{{ $review->user->avatar ? $review->user->avatar : 'https://ui-avatars.com/api/?name=' . urlencode($review->user->name) . '&background=random&color=fff&size=128' }}"
+                                        alt="author">
+                                    <div class="space-y-1">
+                                        <h3 class="font-bold text-base">{{ $review->user->name ?? 'John Smith' }}</h3>
+                                        <p class="text-black/60 font-medium text-sm">
+                                            {{ date('d F Y', strtotime($review->created_at)) ?? '05 March 2022' }}</p>
+                                    </div>
+                                </div>
+                                <h4 class="font-medium ms-5">{{ $review->rating }} / 5</h4>
+                            </div>
+                            <p class="text-black/60 ms-5">
+                                {{ $review->review }}
+                            </p>
+                        </li>
+                    @endforeach
+                </ul>
+
+                @if (!isset($alreadyReviewed))
+                    <div>
+                        <form action="/reviews/{{ $recipe->id }}" method="POST"
+                            class="flex flex-col gap-4 max-w-xl my-12 mx-8">
+                            @csrf
+
+                            <div class="flex flex-col gap-1">
+                                <label class="font-semibold" for="rating">Rating</label>
+                                <div class="flex items-center">
+                                    <input class="my-4 flex-1 text-black" type="range" name="rating" id="rating"
+                                        min="1" max="5" step="1">
+                                    <span id="rating-display" class="font-semibold ms-2"></span>
+                                </div>
+                                @error('rating')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <x-forms.input-field name="review" type="text" label="Review"
+                                placeholder="Write your review" />
+
+                            <x-forms.submit-button>Submit Review</x-forms.submit-button>
+                        </form>
+                    </div>
+                @endif
+
+            </div>
+
+        </div>
+
         <div class="my-20">
             <x-home.newsletter />
         </div>
     </div>
 
 </x-layout>
+
+
+<script>
+    const value = document.querySelector("#rating-display");
+    const input = document.querySelector("#rating");
+    value.textContent = input.value;
+    input.addEventListener("input", (event) => {
+        value.textContent = event.target.value;
+    });
+</script>
