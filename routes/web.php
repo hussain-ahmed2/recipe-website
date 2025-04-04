@@ -6,6 +6,7 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\ReviewRatingController;
 use App\Http\Controllers\SessionController;
 use App\Models\Category;
 use App\Models\FeaturedRecipe;
@@ -48,6 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/recipes', [RecipeController::class, 'store'])->name('recipes.store'); // store new recipe
     Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit'])->name('recipes.edit'); // show edit recipe page
     Route::put('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update'); // update recipe
+    Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); // delete recipe
+
+    Route::post('/reviews/{recipe}', [ReviewRatingController::class, 'store'])->name('reviews.store'); // store new review
 });
 
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index'); // show recipes page
