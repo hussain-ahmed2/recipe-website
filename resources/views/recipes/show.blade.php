@@ -49,7 +49,7 @@
                         <box-icon name='star' type='solid'></box-icon>
                         <div class="space-y-2">
                             <h4 class="font-medium uppercase text-xs">Rating</h4>
-                            <p class="font-medium text-black/60">{{ round($recipe->averageRating(), 1) ?? 'N/A' }} / 5
+                            <p class="font-medium text-black/60">{{ round($recipe->reviews_avg_rating, 1) ?? 'N/A' }} / 5
                             </p>
                         </div>
                     </div>
@@ -129,11 +129,12 @@
                 <ul class="my-8 mx-8 list-inside space-y-4">
                     @foreach ($recipe->reviews as $review)
                         @php
-                            if ($review->user_id === Auth::user()->id) {
-                                $alreadyReviewed = true;
+                            if (Auth::user() && $review->user_id === Auth::user()->id) {
+                                $alreadyReviewed = $review;
                             }
                         @endphp
-                        <li class="p-6 rounded-2xl {{ $review->user_id === Auth::user()->id ? "bg-green-100" : "bg-gray-50" }} space-y-5">
+                        <li
+                            class="p-6 rounded-2xl {{ isset($alreadyReviewed) ? 'bg-green-100' : 'bg-gray-50' }} space-y-5">
                             <div class="flex justify-between flex-wrap">
                                 <div class="flex items-center gap-4">
                                     <img class="h-12 w-12 rounded-full"
@@ -150,6 +151,9 @@
                             <p class="text-black/60 ms-5">
                                 {{ $review->review }}
                             </p>
+                            @isset($alreadyReviewed)
+                                <button id="modal-open-btn" class="block ms-auto btn">Edit</button>
+                            @endisset
                         </li>
                     @endforeach
                 </ul>
@@ -172,22 +176,68 @@
                                 @enderror
                             </div>
 
-                            <x-forms.input-field name="review" type="text" label="Review"
-                                placeholder="Write your review" />
+                            <div class="flex flex-col gap-1">
+                                <label class="font-semibold" for="review">Review</label>
+                                <textarea name="review" id="review" class="input" rows="5" placeholder="Enter your review..."></textarea>
+                                @error('review')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
 
                             <x-forms.submit-button>Submit Review</x-forms.submit-button>
                         </form>
                     </div>
-                @endif
+                @else
+                    <div id="modal"
+                        class="fixed top-0 left-0 w-full h-full z-30 bg-black/30 scale-0 transition-transform duration-300">
+                        <div
+                            class="border border-gray-300 rounded-3xl bg-neutral-50 p-14 max-w-3xl mx-auto w-full mt-20">
+                            <div class="flex flex-col gap-4 w-full">
+                                <p class="font-semibold text-3xl">Edit your review</p>
+                                <form action="/reviews/{{ $alreadyReviewed->id }}" method="POST"
+                                    class="flex flex-col gap-4 w-full max-w-3xl">
+                                    @csrf
+                                    @method('PUT')
 
+                                    <div class="flex flex-col gap-1 w-full max-w-3xl">
+                                        <label class="font-semibold" for="rating">Rating</label>
+                                        <div class="flex items-center">
+                                            <input value="{{ $alreadyReviewed->rating }}"
+                                                class="my-4 flex-1 text-black" type="range" name="rating"
+                                                id="rating" min="1" max="5" step="1">
+                                            <span id="rating-display" class="font-semibold ms-2"></span>
+                                        </div>
+                                        @error('rating')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <div class="flex flex-col gap-1">
+                                        <label class="font-semibold" for="review">Review</label>
+                                        <textarea name="review" id="review" class="input" rows="5" placeholder="Enter your review...">{{ $alreadyReviewed->review }}</textarea>
+                                        @error('review')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <x-forms.submit-button>Submit Review</x-forms.submit-button>
+                                </form>
+                                <form action="/reviews/{{ $alreadyReviewed->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="btn-danger bg-red-500 hover:bg-red-600 w-full">Delete Review</button>
+                                </form>
+                                <button id="modal-close-btn" class="btn-danger">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
 
+            <div class="my-20">
+                <x-home.newsletter />
+            </div>
         </div>
-
-        <div class="my-20">
-            <x-home.newsletter />
-        </div>
-    </div>
 
 </x-layout>
 
@@ -199,4 +249,18 @@
     input.addEventListener("input", (event) => {
         value.textContent = event.target.value;
     });
+
+
+    const modalOpenBtn = document.getElementById('modal-open-btn');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modal = document.getElementById("modal");
+
+    modalOpenBtn.addEventListener('click', () => {
+        modal.classList.toggle('scale-0');
+        console.log('open')
+    })
+    modalCloseBtn.addEventListener('click', () => {
+        modal.classList.toggle('scale-0');
+        console.log('close')
+    })
 </script>

@@ -43,7 +43,7 @@ class RecipeController extends Controller
             $query->orderBy($sortBy, $order);
         }
 
-        $recipes = $query->paginate(12)->withQueryString();
+        $recipes = $query->with('category')->paginate(12)->withQueryString();
 
         return view('recipes.index', compact('recipes', 'categories'));
     }
@@ -53,9 +53,15 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        return view('recipes.show', [
-            'recipe' => $recipe
+        $recipe->load([
+            'reviews.user', // eager-load the reviewer if needed
+            'user',
+            'category'
         ]);
+
+        $recipe->loadAvg('reviews', 'rating');   // get average rating efficiently
+
+        return view('recipes.show', compact('recipe'));
     }
 
     public function create() 

@@ -9,13 +9,14 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\ReviewRatingController;
 use App\Http\Controllers\SessionController;
 use App\Models\Category;
-use App\Models\FeaturedRecipe;
 use App\Models\Recipe;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $featuredRecipe = FeaturedRecipe::first()->recipe;
-    $recipes = Recipe::where('id', '!=', optional($featuredRecipe)->id)->inRandomOrder()->take(6)->get();
+    $featuredRecipe = Recipe::with(['user', 'category'])->inRandomOrder()->first();
+
+    $recipes = Recipe::with('category')->whereNot('id', $featuredRecipe->id)->inRandomOrder()->take(6)->get();
+
     $categories = Category::inRandomOrder()->take(6)->get();
 
     return view('index', compact('featuredRecipe', 'recipes', 'categories'));
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); // delete recipe
 
     Route::post('/reviews/{recipe}', [ReviewRatingController::class, 'store'])->name('reviews.store'); // store new review
+    Route::put('/reviews/{review}', [ReviewRatingController::class, 'update'])->name('reviews.update'); // update review
+    Route::delete('/reviews/{review}', [ReviewRatingController::class, 'destroy'])->name('reviews.destroy'); // delete review
 });
 
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index'); // show recipes page
