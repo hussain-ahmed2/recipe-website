@@ -27,5 +27,30 @@ class ReviewRatingController extends Controller
         return redirect()->back()->with('success', 'Review submitted successfully.');
     }
 
-    
+    public function update(Request $request, ReviewRating $review) {
+        $request->validate([
+            'rating' => ['required', Rule::in([1, 2, 3, 4, 5])],
+            'review' => ['string'],
+        ]);
+
+        if ($review->user_id != Auth::user()->id) {
+            return redirect()->back()->with('error', 'You do not have permission to update this review.');
+        }
+
+        $review->rating = $request->rating;
+        $review->review = $request->review;
+        $review->save();
+
+        return redirect()->back()->with('success', 'Review updated successfully.');
+    }
+
+    public function destroy(ReviewRating $review) {
+        if ($review->user_id != Auth::user()->id) {
+            return redirect()->back()->with('error', 'You do not have permission to delete this review.');
+        }
+
+        $review->delete();
+
+        return redirect()->back()->with('success', 'Review deleted successfully.');
+    }
 }
