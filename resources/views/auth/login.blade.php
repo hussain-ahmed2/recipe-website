@@ -13,7 +13,7 @@
 
             <x-forms.submit-button>Login</x-forms.submit-button>
         </form>
-
+        <p class="mt-4">Don't have an account? <a href="/register" class="text-orange-600 hover:underline">Register</a></p>
     </div>
 
 </x-layout>
