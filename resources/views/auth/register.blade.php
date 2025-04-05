@@ -16,6 +16,7 @@
             <x-forms.submit-button>Register</x-forms.submit-button>
         </form>
 
+        <p class="mt-4">Already have an account? <a href="/login" class="text-orange-600 hover:underline">Login</a></p>
     </div>
 
 </x-layout>
